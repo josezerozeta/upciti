@@ -1,5 +1,7 @@
 import queue
 
+from src.model.frame_vector import FrameVector
+
 
 class Topic:
 
@@ -7,11 +9,18 @@ class Topic:
         self.__name = name
         self.__queue = queue.Queue(size)
 
-    def put_message(self, message: str):
-        self.__queue.put(message)
+    def put_message(self, message: FrameVector, block=True):
+        try:
+            self.__queue.put(message, block, timeout=1)
+        except queue.Full:
+            pass
 
-    def get_message(self) -> str:
-        return self.__queue.get(True)
+    def get_message(self, block=True) -> FrameVector:
+        message = None
+        while not message:
+            try:
+                message = self.__queue.get(block, timeout=1)
+            except queue.Empty:
+                pass
 
-    def __str__(self) -> str:
-        return 'name: ' + self.__name + ', queue: ' + str(self.__queue)
+        return message

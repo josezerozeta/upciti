@@ -17,7 +17,8 @@ class Manager:
 
     def consume(self, consumer):
         for (topic, process_message) in self.__consumers_strategy[consumer]:
-            process_message(topic.get_message())
+            message = topic.get_message()
+            process_message(message)
 
     def produce(self, producer):
         for (topic, message_generator) in self.__producers_strategy[producer]:

@@ -30,7 +30,7 @@ def create_single_shot_detector(manager: Manager, motion_vector_topic: Topic, de
     manager.register_consumer(
         single_shot_detector,
         motion_vector_topic,
-        lambda message: detection_vector_topic.put_message(detection_vector.random_generator()))
+        lambda message: detection_vector_topic.put_message(detection_vector.random_generator(message)))
     return single_shot_detector
 
 
@@ -41,5 +41,5 @@ def create_logger(manager: Manager, motion_vector_topic: Topic, detection_vector
     return logger
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,28 +1,26 @@
-import sys
 import random
-from datetime import datetime
 from dataclasses import dataclass
 
-from src.model.frame_vector import FrameVector, BoundingBox
+from src.model.frame_vector import FrameVector
 
 
 @dataclass
 class PredictionVector:
-    __target: str
-    __accuracy: float
+    target: str
+    accuracy: float
 
     @staticmethod
     def random_generator():
-        return PredictionVector("str", random.uniform(0, 100))
+        return PredictionVector(["car", "person", "bicycle"][random.randint(0, 2)], random.uniform(0, 100))
 
 
 @dataclass(init=True)
 class DetectionVector(FrameVector):
-    __prediction_vector: PredictionVector
+    prediction_vector: PredictionVector
 
 
-def random_generator():
-    return DetectionVector(datetime.now(),
-                           random.randint(1, sys.maxsize),
-                           BoundingBox.random_generator(),
+def random_generator(frame_vector: FrameVector) -> FrameVector:
+    return DetectionVector(frame_vector.timestamp,
+                           frame_vector.frame_id,
+                           frame_vector.bounding_box,
                            PredictionVector.random_generator())

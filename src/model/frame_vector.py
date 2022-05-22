@@ -6,10 +6,10 @@ from abc import ABC
 
 @dataclass
 class BoundingBox:
-    __x: float
-    __y: float
-    __width: int
-    __height: int
+    x: float
+    y: float
+    width: int
+    height: int
 
     @staticmethod
     def random_generator():
@@ -19,6 +19,6 @@ class BoundingBox:
 
 @dataclass
 class FrameVector(ABC):
-    __timestamp: datetime
-    __frame_id: int
-    __bounding_box: BoundingBox
+    timestamp: datetime
+    frame_id: int
+    bounding_box: BoundingBox

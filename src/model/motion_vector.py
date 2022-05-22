@@ -8,8 +8,8 @@ from src.model.frame_vector import FrameVector, BoundingBox
 
 @dataclass
 class VelocityVector:
-    __velocity_x: float
-    __velocity_y: float
+    velocity_x: float
+    velocity_y: float
 
     @staticmethod
     def random_generator():
@@ -18,7 +18,7 @@ class VelocityVector:
 
 @dataclass(init=True)
 class MotionVector(FrameVector):
-    __velocity: VelocityVector
+    velocity: VelocityVector
 
 
 def random_generator():
