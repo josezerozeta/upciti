@@ -3,7 +3,7 @@ import random
 from datetime import datetime
 from dataclasses import dataclass
 
-from src.model.FrameVector import FrameVector, BoundingBox
+from src.model.frame_vector import FrameVector, BoundingBox
 
 
 @dataclass

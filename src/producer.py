@@ -1,4 +1,4 @@
-import Manager
+from src.manager import Manager
 
 
 class Producer:

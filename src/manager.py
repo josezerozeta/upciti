@@ -1,4 +1,4 @@
-import Topic
+from src.topic import Topic
 
 
 class Manager:
