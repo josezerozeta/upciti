@@ -8,8 +8,8 @@ from src.model.FrameVector import FrameVector, BoundingBox
 
 @dataclass
 class PredictionVector:
-    target: str
-    accuracy: float
+    __target: str
+    __accuracy: float
 
     @staticmethod
     def random_generator():
@@ -18,7 +18,7 @@ class PredictionVector:
 
 @dataclass(init=True)
 class DetectionVector(FrameVector):
-    predictionVector: PredictionVector
+    __prediction_vector: PredictionVector
 
 
 def random_generator():
