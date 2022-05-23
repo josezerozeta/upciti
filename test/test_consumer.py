@@ -1,6 +1,7 @@
 import threading
 import unittest
 
+from src.model import motion_vector
 from src.topic import Topic
 from src.manager import Manager
 from src.consumer import Consumer
@@ -14,12 +15,13 @@ class TestConsumer(unittest.TestCase):
         topic = Topic('topic')
         consumer = Consumer('consumer', manager)
 
+        test = motion_vector.random_generator()
         event = threading.Event()
-        topic.put_message('test')
+        topic.put_message(test)
 
         def process_message(message: str):
             event.wait()
-            self.assertEqual(message, 'test')
+            self.assertEqual(message, test)
 
         manager.register_consumer(consumer, topic, process_message)
 

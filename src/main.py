@@ -1,6 +1,9 @@
+import time
+
+from src.model.frame_vector import FrameVector
 from src.topic import Topic
 from src.manager import Manager
-from src.consumer import Consumer
+from src.consumer import Consumer, Peeker
 from src.producer import Producer
 from concurrent.futures import ThreadPoolExecutor
 
@@ -21,16 +24,25 @@ def main():
 
 def create_motion_detector(manager: Manager, motion_vector_topic: Topic) -> Producer:
     motion_detector = Producer('Motion Detector', manager)
-    manager.register_producer(motion_detector, motion_vector_topic, motion_vector.random_generator)
+
+    def message_generator():
+        # simulate some work time
+        time.sleep(0.001)
+        return motion_vector.random_generator()
+
+    manager.register_producer(motion_detector, motion_vector_topic, message_generator)
     return motion_detector
 
 
-def create_single_shot_detector(manager: Manager, motion_vector_topic: Topic, detection_vector_topic: Topic) -> Consumer:
-    single_shot_detector = Consumer('Single Shot Detector', manager)
-    manager.register_consumer(
-        single_shot_detector,
-        motion_vector_topic,
-        lambda message: detection_vector_topic.put_message(detection_vector.random_generator(message)))
+def create_single_shot_detector(manager: Manager, motion_vector_topic: Topic, detection_vector_topic: Topic) -> Peeker:
+    single_shot_detector = Peeker('Single Shot Detector', manager)
+
+    def process_message(message: FrameVector):
+        # simulate some work time
+        time.sleep(0.001)
+        detection_vector_topic.put_message(detection_vector.random_generator(message))
+
+    manager.register_consumer(single_shot_detector, motion_vector_topic, process_message)
     return single_shot_detector
 
 

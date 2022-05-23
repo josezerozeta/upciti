@@ -24,6 +24,12 @@ class Manager:
             message = topic.get_message()
             process_message(message)
 
+    def peek(self, consumer):
+        """the consumer consumes messages to all the topics that has been registered"""
+        for (topic, process_message) in self.__consumers_strategy[consumer]:
+            message = topic.peek_message()
+            process_message(message)
+
     def produce(self, producer):
         """the producer produces messages to all the topics that has been registered"""
         for (topic, message_generator) in self.__producers_strategy[producer]:
