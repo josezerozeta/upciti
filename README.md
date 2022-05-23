@@ -2,6 +2,6 @@
 
 A publish-subscribe messaging pattern to exchange messages
 
-The goal of this project is create a publish-subscribe orchestrator 
-that makes essay to create any kind of workflow communication 
-between threads.
+The goal of this project is create a simple publish-subscribe 
+orchestrator that makes essay to create any kind of workflow 
+communication between threads.

@@ -3,6 +3,11 @@ from time import monotonic as time
 
 
 class PeekQueue(queue.Queue):
+    """
+    Create a peek queue object with a given maximum size.
+    This queue is similar to a queue but it also implements
+    a peek method from the queue
+    """
 
     def peek(self, block=True, timeout=None):
         """Return first item from queue without removing it
@@ -25,9 +30,9 @@ class PeekQueue(queue.Queue):
             elif timeout < 0:
                 raise ValueError("'timeout' must be a non-negative number")
             else:
-                endtime = time() + timeout
+                end_time = time() + timeout
                 while not self._qsize():
-                    remaining = endtime - time()
+                    remaining = end_time - time()
                     if remaining <= 0.0:
                         raise queue.Empty
                     self.not_empty.wait(remaining)

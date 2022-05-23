@@ -6,8 +6,8 @@ from src.manager import Manager
 class Consumer:
     """Class implementing a consumer task
 
-    Consume messages from a source, the consumer need to be registered
-    in a Manager with the source and a strategy to process the messages
+    Consume messages from a topic, the consumer need to be registered
+    in a Manager with the target topic and a strategy to process the messages
     """
 
     def __init__(self, name: str, manager: Manager):
@@ -16,7 +16,7 @@ class Consumer:
         self.__stopped = threading.Event()
 
     def consume(self):
-        """start to consume events"""
+        """start to consume messages"""
         while not self.__stopped.is_set():
             self.__manager.consume(self)
 
@@ -26,8 +26,10 @@ class Consumer:
         """stop method to kill the task"""
         self.__stopped.set()
 
-    def is_stopped(self):
-        """is the producer stopped"""
+    def is_stopped(self) -> bool:
+        """
+        :return: true is the producer stopped
+        """
         return self.__stopped.is_set()
 
     def get_manager(self):
@@ -38,5 +40,6 @@ class Consumer:
 class Peeker(Consumer):
 
     def consume(self):
+        """start to peek messages"""
         while not self.is_stopped():
             self.get_manager().peek(self)
